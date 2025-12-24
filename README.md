@@ -1,8 +1,17 @@
 # 🛒 E-Commerce Text Classification  
+
 ### Perbandingan LSTM, BERT, dan DistilBERT
 
-Repositori ini berisi implementasi sistem **klasifikasi teks deskripsi produk e-commerce** menggunakan pendekatan **deep learning** dan **pretrained transformer**.  
-Proyek ini membandingkan performa tiga model utama, yaitu **LSTM**, **BERT**, dan **DistilBERT**, dalam mengklasifikasikan teks produk ke dalam beberapa kategori e-commerce.
+Repositori ini berisi implementasi sistem **klasifikasi teks deskripsi produk e-commerce** menggunakan dataset teks.
+Proyek ini membandingkan tiga pendekatan:
+* **Pendekatan deep learning** (LSTM)
+* **Pretrained transformer** (BERT dan DistilBERT)
+   
+Model bertugas dalam mengklasifikasikan teks produk ke dalam beberapa kategori e-commerce. Terdapat 4 kelas:
+* **Househould**
+* **Books**
+* **Electronics**
+* **Clothing & Accessories**
 
 Tujuan utama proyek ini adalah membangun sistem klasifikasi teks yang **akurat, efisien, dan mudah diimplementasikan**, serta menyajikannya dalam bentuk **website berbasis Streamlit** yang dapat dijalankan secara lokal.
 
@@ -20,9 +29,7 @@ Data dibaca langsung dari file CSV dengan penanganan baris bermasalah untuk menc
 
 ---
 
-## 🔍 Metodologi
-
-### Preprocessing Data
+## Preprocessing Data
 
 Tahapan preprocessing dilakukan sesuai alur berikut:
 
@@ -80,20 +87,90 @@ Evaluasi dilakukan menggunakan metrik **Accuracy, Precision, Recall, dan F1-Scor
 
 ### Perbandingan Performa Model
 
-| Model       | Performa Umum      | Karakteristik |
-|-------------|--------------------|---------------|
-| LSTM        | Baik               | Stabil, namun kurang optimal pada teks panjang |
-| BERT        | Sangat Baik        | Akurasi tertinggi, komputasi berat |
-| DistilBERT | Baik – Sangat Baik | Efisien dan cepat untuk deployment |
+| Model       | Akurasi | Analisis Perbandingan |
+|-------------|---------|-----------------------|
+| LSTM        | 0.521   | Mampu mempelajari urutan kata, namun kurang efektif dalam menangkap konteks global pada teks panjang. |
+| BERT        | 0.948   | Memberikan akurasi tinggi berkat pemahaman konteks dua arah, tetapi membutuhkan sumber daya komputasi yang besar. |
+| DistilBERT | 0.956   | Menghasilkan akurasi tertinggi dengan waktu inferensi lebih cepat, sehingga lebih efisien dan cocok untuk deployment. |
 
 ---
+
+## 🚀 Panduan Menjalankan Sistem Website Secara Lokal
+
+Aplikasi ini merupakan sistem klasifikasi teks e-commerce berbasis **Streamlit**.  
+Model **LSTM, BERT, dan DistilBERT** telah **dilatih sebelumnya menggunakan Google Colab** dengan kode: 
+
+**Code_UAP.ipynb**
+
+
+Model hasil pelatihan kemudian digunakan kembali (load model) pada aplikasi website lokal.
+
+### 1️⃣ Persiapan Model
+Sebelum menjalankan website secara lokal, pastikan:
+* Proses training pada **Google Colab (`Code_UAP.ipynb`)** telah selesai
+* File model hasil training sudah diunduh dari Colab
+* Seluruh file model disimpan pada folder proyek lokal sesuai struktur yang ditentukan
+
+Model yang telah dilatih tersedia di folder models. Namun dalam hal ini, untuk seluruh model (lstm, BERT, dan DistilBERT) tidak dapat diupload ke dalam direktori github karena keterbtasan ukuran file. Berikut disediakan seluruh model hasil training dalam bentuk link Google Drive. 
+
+
+Model tidak dilatih ulang saat website dijalankan.
+
+
+---
+
+### 2️⃣ Persiapan Lingkungan Lokal
+Pastikan perangkat telah terpasang:
+* **Python 3.10.16 atau lebih baru**
+* **pip** sebagai package manager
+* Sistem operasi Windows 
+
+Disarankan menggunakan **virtual environment** untuk menjaga konsistensi dependensi.
+
+---
+
+### 3️⃣ Instalasi Dependensi
+Instal seluruh library yang dibutuhkan sesuai dengan dependensi proyek, meliputi:
+- Streamlit (antarmuka website)
+- PyTorch (model LSTM)
+- Transformers (BERT dan DistilBERT)
+- Library pendukung pemrosesan teks dan data
+
+---
+
+Anda juga dapat menginstal code app.py untuk membangun sistem website streamlit secara lokal
+
+---
+
+### 4️⃣ Menjalankan Aplikasi Website
+Setelah lingkungan dan dependensi siap:
+- Jalankan aplikasi Streamlit dari terminal
+- Browser akan terbuka otomatis pada alamat **localhost**
+- Aplikasi siap digunakan tanpa proses training ulang
+
+---
+
+### 5️⃣ Penggunaan Sistem
+Pada halaman website, pengguna dapat:
+- Memasukkan teks deskripsi produk e-commerce
+- Memilih model klasifikasi (**LSTM / BERT / DistilBERT**)
+- Melihat hasil prediksi kategori secara langsung
+
+---
+
+### 6️⃣ Catatan Penting
+- Loading awal dapat memerlukan waktu karena proses pemuatan model
+- Model Transformer akan berjalan lebih cepat jika tersedia GPU
+- Pastikan versi library di lokal kompatibel dengan environment Google Colab saat training
+
+
 
 ## 🧪 Analisis Kesalahan
 
 Kesalahan klasifikasi umumnya disebabkan oleh:
-- Deskripsi produk yang terlalu singkat atau ambigu
-- Tumpang tindih makna antar kategori
-- Noise teks seperti typo dan simbol
+* Deskripsi produk yang terlalu singkat atau ambigu
+* Tumpang tindih makna antar kategori
+* Noise teks seperti typo dan simbol
 
 Perbaikan yang dapat dilakukan meliputi augmentasi teks, penambahan konteks, serta tuning hyperparameter model.
 
