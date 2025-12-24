@@ -1,176 +1,114 @@
-# UAP_Machine-Learning
-
-Siap 👍
-Di bawah ini **sudah dalam format `README.md` GitHub** (Markdown), **langsung bisa kamu copy–paste tanpa diedit lagi**.
-
----
-
-````md
 # 🛒 E-Commerce Text Classification  
-**Perbandingan LSTM, BERT, dan DistilBERT**
+### Perbandingan LSTM, BERT, dan DistilBERT
 
-## 📌 Deskripsi Proyek
-Proyek ini bertujuan untuk melakukan **klasifikasi teks deskripsi produk e-commerce** ke dalam beberapa kategori menggunakan pendekatan **deep learning** dan **pretrained transformer**.  
-Tiga model yang digunakan dan dibandingkan dalam proyek ini adalah:
+Repositori ini berisi implementasi sistem **klasifikasi teks deskripsi produk e-commerce** menggunakan pendekatan **deep learning** dan **pretrained transformer**.  
+Proyek ini membandingkan performa tiga model utama, yaitu **LSTM**, **BERT**, dan **DistilBERT**, dalam mengklasifikasikan teks produk ke dalam beberapa kategori e-commerce.
 
-- **LSTM (Long Short-Term Memory)**
-- **BERT (Bidirectional Encoder Representations from Transformers)**
-- **DistilBERT**
-
-Sistem ini diimplementasikan dalam bentuk **website berbasis Streamlit** yang dapat dijalankan secara lokal.
+Tujuan utama proyek ini adalah membangun sistem klasifikasi teks yang **akurat, efisien, dan mudah diimplementasikan**, serta menyajikannya dalam bentuk **website berbasis Streamlit** yang dapat dijalankan secara lokal.
 
 ---
 
 ## 📂 Dataset
-Dataset yang digunakan adalah **E-Commerce Text Classification Dataset** dari Kaggle:
 
+Dataset yang digunakan berasal dari Kaggle:
+
+**E-Commerce Text Classification Dataset**  
 🔗 https://www.kaggle.com/datasets/saurabhshahane/ecommerce-text-classification
 
-### Karakteristik Dataset
-- Format: CSV
-- Kolom:
-  - `Label` → kategori produk
-  - `Text` → deskripsi produk
-- Contoh kategori:
-  - Clothing
-  - Electronics
-  - Household
-  - Books
+Dataset terdiri dari dua kolom utama, yaitu **Label** (kategori produk) dan **Text** (deskripsi produk).  
+Data dibaca langsung dari file CSV dengan penanganan baris bermasalah untuk mencegah error parsing.
 
 ---
 
-## 🔧 Preprocessing Data
-Tahapan preprocessing data yang dilakukan adalah sebagai berikut:
+## 🔍 Metodologi
 
-1. **Load Dataset**
-   - Dataset dibaca dari file CSV tanpa header.
-   - Kolom dimapping secara manual menjadi `Label` dan `Text`.
-   - Baris bermasalah dilewati untuk mencegah error parsing.
+### Preprocessing Data
 
-2. **Pembersihan Data**
-   - Menghapus data yang memiliki nilai kosong (NaN).
-   - Mengubah seluruh teks menjadi huruf kecil.
-   - Menghapus karakter selain huruf.
-   - Menghapus spasi berlebih.
+Tahapan preprocessing dilakukan sesuai alur berikut:
 
-3. **Sampling Data**
-   - Dataset disampling menjadi **10.000 data** menggunakan **stratified sampling** agar distribusi label tetap seimbang.
+1. **Pembacaan dan Validasi Data**  
+   Dataset dibaca dari file CSV dengan pemetaan kolom yang sesuai.  
+   Baris data yang tidak valid atau mengalami kesalahan parsing diabaikan untuk menjaga konsistensi struktur data.
 
-4. **Encoding Label**
-   - Label kategori dikonversi menjadi nilai numerik menggunakan **LabelEncoder**.
-   - Mapping label disimpan untuk proses inference.
+2. **Pembersihan Data Kosong**  
+   Data dengan nilai kosong pada kolom label atau teks dihapus.  
+   Seluruh nilai label dan teks dikonversi ke tipe string untuk menghindari inkonsistensi tipe data.
 
-5. **Split Data**
-   - Data dibagi menjadi:
-     - 80% data latih
-     - 20% data uji
-   - Pembagian dilakukan secara stratified.
+3. **Sampling Data**  
+   Untuk efisiensi komputasi, dataset disampling menjadi **10.000 data** dengan distribusi label yang tetap seimbang (stratified sampling).
 
----
+4. **Pembersihan Teks (Text Cleaning)**  
+   Setiap teks diproses melalui tahapan:
+   - Konversi ke huruf kecil (lowercase)
+   - Penghapusan karakter selain huruf alfabet
+   - Penghapusan spasi berlebih  
+   Tahapan ini bertujuan untuk mengurangi noise dan variasi yang tidak relevan pada teks.
 
-## 🤖 Model yang Digunakan
+5. **Encoding Label**  
+   Label kategori diubah ke dalam bentuk numerik agar dapat diproses oleh model machine learning dan deep learning.
 
-### 1️⃣ LSTM (Long Short-Term Memory)
-- Menggunakan embedding layer untuk representasi kata
-- Mampu menangkap pola sekuensial pada teks
-- Digunakan sebagai baseline model
-
-**Kelemahan:**
-- Performa lebih rendah dibanding transformer
-- Kurang optimal untuk teks panjang
+6. **Pembagian Data**  
+   Data yang telah diproses dibagi menjadi **data latih (80%)** dan **data uji (20%)** dengan menjaga proporsi masing-masing kelas.
 
 ---
 
-### 2️⃣ BERT
-- Menggunakan model pretrained `bert-base-uncased`
-- Memahami konteks dua arah (bidirectional)
-- Memberikan performa klasifikasi terbaik
+### Pemodelan
 
-**Kelemahan:**
-- Ukuran model besar
-- Waktu training dan inference lebih lama
+Tiga model digunakan dalam penelitian ini:
 
----
+- **LSTM (Long Short-Term Memory)**  
+  Model deep learning berbasis RNN yang mempelajari urutan kata dan konteks lokal dalam teks.
 
-### 3️⃣ DistilBERT
-- Versi ringan dari BERT
-- Lebih cepat dan efisien
-- Cocok untuk deployment website
+- **BERT (Bidirectional Encoder Representations from Transformers)**  
+  Model pretrained transformer yang memahami konteks kata secara dua arah dan memberikan performa klasifikasi terbaik.
 
-**Keunggulan:**
-- Akurasi mendekati BERT
-- Waktu inference lebih cepat
-- Ukuran model lebih kecil
+- **DistilBERT**  
+  Model transformer ringan yang mempertahankan sebagian besar performa BERT dengan kebutuhan komputasi yang lebih rendah.
 
 ---
 
-## 📊 Hasil Evaluasi dan Analisis
+## 🌐 Implementasi Sistem
 
-| Model       | Akurasi        | Kecepatan | Ukuran Model |
-|------------|----------------|-----------|--------------|
-| LSTM       | Rendah–Sedang  | Lambat    | Kecil        |
-| BERT       | Tinggi         | Lambat    | Besar        |
-| DistilBERT | Tinggi         | Cepat     | Sedang       |
-
-### Analisis Perbandingan
-- **BERT** menghasilkan akurasi tertinggi dalam klasifikasi teks.
-- **DistilBERT** memberikan keseimbangan terbaik antara akurasi dan efisiensi.
-- **LSTM** dapat digunakan sebagai pembanding, namun kalah performa dari model transformer.
+Sistem klasifikasi teks diimplementasikan dalam bentuk **website berbasis Streamlit**.  
+Pengguna dapat memasukkan teks deskripsi produk, memilih model klasifikasi, dan memperoleh hasil prediksi kategori secara real-time melalui antarmuka yang interaktif.
 
 ---
 
-## 🌐 Panduan Menjalankan Website Secara Lokal
+## 📊 Evaluasi dan Hasil
 
-### 1️⃣ Clone Repository
-```bash
-git clone https://github.com/username/nama-repo.git
-cd nama-repo
-````
+Evaluasi dilakukan menggunakan metrik **Accuracy, Precision, Recall, dan F1-Score**.
 
-### 2️⃣ Buat Virtual Environment (Opsional)
+### Perbandingan Performa Model
 
-```bash
-python -m venv venv
-source venv/bin/activate   # Linux / Mac
-venv\Scripts\activate      # Windows
-```
+| Model       | Performa Umum      | Karakteristik |
+|-------------|--------------------|---------------|
+| LSTM        | Baik               | Stabil, namun kurang optimal pada teks panjang |
+| BERT        | Sangat Baik        | Akurasi tertinggi, komputasi berat |
+| DistilBERT | Baik – Sangat Baik | Efisien dan cepat untuk deployment |
 
-### 3️⃣ Install Dependency
+---
 
-```bash
-pip install -r requirements.txt
-```
+## 🧪 Analisis Kesalahan
 
-### 4️⃣ Jalankan Aplikasi Streamlit
+Kesalahan klasifikasi umumnya disebabkan oleh:
+- Deskripsi produk yang terlalu singkat atau ambigu
+- Tumpang tindih makna antar kategori
+- Noise teks seperti typo dan simbol
 
-```bash
-streamlit run app.py
-```
-
-### 5️⃣ Akses Website
-
-Buka browser dan akses:
-
-```
-http://localhost:8501
-```
+Perbaikan yang dapat dilakukan meliputi augmentasi teks, penambahan konteks, serta tuning hyperparameter model.
 
 ---
 
 ## 📌 Kesimpulan
 
-Model berbasis **transformer (BERT dan DistilBERT)** terbukti lebih unggul dibandingkan **LSTM** dalam tugas klasifikasi teks e-commerce.
-Untuk implementasi pada website, **DistilBERT** menjadi pilihan paling optimal karena efisien dan tetap memberikan performa tinggi.
-
-```
+Model berbasis transformer (**BERT dan DistilBERT**) menunjukkan performa terbaik dalam klasifikasi teks e-commerce.  
+**DistilBERT** menjadi pilihan yang lebih efisien untuk aplikasi berbasis web, sementara **LSTM** tetap relevan sebagai baseline deep learning.  
+Proyek ini dapat dikembangkan lebih lanjut untuk kebutuhan NLP lainnya seperti sentiment analysis dan multi-language classification.
 
 ---
 
-Kalau kamu mau, aku bisa:
-- Menyesuaikan README dengan **nama repo & struktur folder kamu**
-- Menambahkan **hasil akurasi aktual dari training**
-- Menambahkan **screenshot Streamlit**
-- Membuat versi **bahasa Inggris**
+## 👩‍💻 Author
 
-Tinggal bilang saja 👌
-```
+**Rifadah Husna**  
+Machine Learning Project  
+2025
