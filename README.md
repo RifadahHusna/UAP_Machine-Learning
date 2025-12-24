@@ -113,6 +113,8 @@ Sebelum menjalankan website secara lokal, pastikan:
 
 Model yang telah dilatih tersedia di folder models. Namun dalam hal ini, untuk seluruh model (lstm, BERT, dan DistilBERT) tidak dapat diupload ke dalam direktori github karena keterbtasan ukuran file. Berikut disediakan seluruh model hasil training dalam bentuk link Google Drive. 
 
+Link Model: https://drive.google.com/drive/folders/1W6x7zRTa-PVlMSb9BbreTaKkeyr03DIb?usp=sharing
+
 
 Model tidak dilatih ulang saat website dijalankan.
 
@@ -127,14 +129,16 @@ Pastikan perangkat telah terpasang:
 
 Disarankan menggunakan **virtual environment** untuk menjaga konsistensi dependensi.
 
+Caranya : **pdm init** pada terminal lokal di laptop atau komputer masing masing ke pada folder project yang akan digunakan
+
 ---
 
 ### 3️⃣ Instalasi Dependensi
 Instal seluruh library yang dibutuhkan sesuai dengan dependensi proyek, meliputi:
-- Streamlit (antarmuka website)
-- PyTorch (model LSTM)
-- Transformers (BERT dan DistilBERT)
-- Library pendukung pemrosesan teks dan data
+* Streamlit (antarmuka website)
+* PyTorch (model LSTM)
+* Transformers (BERT dan DistilBERT)
+* Library pendukung pemrosesan teks dan data
 
 ---
 
@@ -144,9 +148,9 @@ Anda juga dapat menginstal code app.py untuk membangun sistem website streamlit 
 
 ### 4️⃣ Menjalankan Aplikasi Website
 Setelah lingkungan dan dependensi siap:
-- Jalankan aplikasi Streamlit dari terminal
-- Browser akan terbuka otomatis pada alamat **localhost**
-- Aplikasi siap digunakan tanpa proses training ulang
+* Jalankan aplikasi Streamlit dari terminal **streamlit run app.py** atau **phyton -m streamlit run app.py**
+* Browser akan terbuka otomatis pada alamat **localhost**
+* Aplikasi siap digunakan tanpa proses training ulang
 
 ---
 
